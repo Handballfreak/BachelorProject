@@ -10,31 +10,33 @@ import random
 import cv2
 import matplotlib.pyplot as plt
 
+
 def plot_samples(dataset_name, n=1):
     dataset_custom = DatasetCatalog.get(dataset_name)
     dataset_custom_metadata = MetadataCatalog.get(dataset_name)
 
     for s in random.sample(dataset_custom, n):
         img = cv2.imread(s["file_name"])
-        v = Visualizer(img[:,:,::-1], metadata=dataset_custom_metadata, scale=0.5)
+        v = Visualizer(img[:, :, ::-1], metadata=dataset_custom_metadata, scale=0.5)
         v = v.draw_dataset_dict(s)
-        plt.figure(figsize=(15,20))
+        plt.figure(figsize=(15, 20))
         plt.imshow(v.get_image())
         plt.show()
 
 
-def get_train_cfg(config_file_path, checkpoint_url, train_dataset_name, test_dataset_name, num_classes, device, output_dir):
+def get_train_cfg(config_file_path, checkpoint_url, train_dataset_name, test_dataset_name, num_classes, device,
+                  output_dir):
     cfg = get_cfg()
 
     cfg.merge_from_file(model_zoo.get_config_file(config_file_path))
     cfg.MODEL.WEIGHTS = model_zoo.get_checkpoint_url(checkpoint_url)
-    cfg.DATASETS.TRAIN = (train_dataset_name, )
-    cfg.DATASETS.TEST = (test_dataset_name, )
+    cfg.DATASETS.TRAIN = (train_dataset_name,)
+    cfg.DATASETS.TEST = (test_dataset_name,)
 
     cfg.DATALOADER.NUM_WORKERS = 8
 
     cfg.SOLVER.IMS_PER_BATCH = 4
-    cfg.SOLVER.BASE_LR = 0.0025 #0.00025
+    cfg.SOLVER.BASE_LR = 0.0025  # 0.00025
     cfg.SOLVER.MAX_ITER = 3000
     cfg.SOLVER.MOMENTUM = 0.9
     cfg.SOLVER.GAMMA = 0.1
@@ -48,10 +50,10 @@ def get_train_cfg(config_file_path, checkpoint_url, train_dataset_name, test_dat
     return cfg
 
 
-def onImage(imagePath, predictor):
-    image = cv2.imread(imagePath)
+def on_image(image_path, predictor):
+    image = cv2.imread(image_path)
     outputs = predictor(image)
-    v = Visualizer(image[:,:,::-1], metadata={}, scale=0.5, instance_mode=ColorMode.SEGMENTATION)
+    v = Visualizer(image[:, :, ::-1], metadata={}, scale=0.5, instance_mode=ColorMode.SEGMENTATION)
     v = v.draw_instance_predictions(outputs["instances"].to("cpu"))
 
     plt.figure(figsize=(14, 10))
@@ -59,9 +61,9 @@ def onImage(imagePath, predictor):
     plt.show()
 
 
-def on_video(videoPath, predictor):
-    cap = cv2.VideoCapture(videoPath)
-    if cap.isOpened()==False:
+def on_video(video_path, predictor):
+    cap = cv2.VideoCapture(video_path)
+    if not cap.isOpened():
         print("Error opening file...")
         return
     (success, image) = cap.read()
@@ -70,7 +72,7 @@ def on_video(videoPath, predictor):
         v = Visualizer(image[:, :, ::-1], metadata={}, scale=0.5, instance_mode=ColorMode.SEGMENTATION)
         output = v.draw_instance_predictions(predictions["instances"].to("cpu"))
 
-        cv2.imshow("Result", output.get_image()[:,:,::-1])
+        cv2.imshow("Result", output.get_image()[:, :, ::-1])
 
         key = cv2.waitKey(1) & 0xFF
         if key == ord("q"):

@@ -18,6 +18,4 @@ predictor = DefaultPredictor(cfg)
 image_path = "data/val/32.jpg"
 videoPath = ""
 
-
-
-onImage(image_path, predictor)
+on_image(image_path, predictor)

@@ -1,7 +1,8 @@
 from detectron2.utils.logger import setup_logger
 from utils import register_dataset
 import wandb
-setup_logger()
+import json
+import time
 from detectron2.evaluation import COCOEvaluator
 from detectron2.data.datasets import register_coco_instances
 from detectron2.engine import DefaultTrainer
@@ -13,12 +14,12 @@ from detectron2.data import DatasetCatalog
 from utils import plot_samples, get_train_cfg
 from evaluate import evaluate
 import detectron2
+setup_logger()
 config_file_path = "COCO-InstanceSegmentation/mask_rcnn_R_50_FPN_3x.yaml"
 checkpoint_url = "COCO-InstanceSegmentation/mask_rcnn_R_50_FPN_3x.yaml"
 # config_file_path = "COCO-Detection/faster_rcnn_R_50_FPN_3x.yaml"
 # checkpoint_url = "COCO-Detection/faster_rcnn_R_50_FPN_3x.yaml"
-import json
-import time
+
 
 output_dir = "./output/instance_segmentation"
 num_classes = 1  # 1
@@ -47,7 +48,6 @@ register_dataset()
 
 ########################################################
 def main(cfg):
-
     with open(cfg_save_path, "wb") as f:
         pickle.dump(cfg, f, protocol=pickle.HIGHEST_PROTOCOL)
 
@@ -72,7 +72,7 @@ def run():
                         output_dir)
     for learning_rate in np.arange(0.0001, 0.01, 0.0005):
         learning_rate = float(learning_rate)
-        #learning_rate = 0.0025
+        # learning_rate = 0.0025
         batch_size = 4
         momentum = 0.9
         epochs = 100
@@ -139,6 +139,7 @@ def run():
         artifact.add_file(directory + "/model_final.pth")
         wandb.log_artifact(artifact)
         wandb.finish()
+
 
 if __name__ == "__main__":
     wandb.tensorboard.patch(root_logdir="./output/instance_segmentation")

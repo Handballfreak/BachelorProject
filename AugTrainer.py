@@ -5,6 +5,7 @@ import copy
 from detectron2.engine import DefaultTrainer
 import torch
 
+
 def custom_mapper(dataset_dict):
     dataset_dict = copy.deepcopy(dataset_dict)
     image = utils.read_image(dataset_dict["file_name"], format="BGR")
