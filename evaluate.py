@@ -7,7 +7,7 @@ import pickle
 from utils import register_dataset
 
 
-def evaluate():
+def evaluate(test_dataset_name):
     # register_dataset()
 
     cfg_save_path = "IS_cfg.pickle"
@@ -21,8 +21,8 @@ def evaluate():
     predictor = DefaultPredictor(cfg)
     # trainer = DefaultTrainer(cfg)
 
-    evaluator = COCOEvaluator("Dd_val", ("bbox", "segm"), False, output_dir="./output/")
-    val_loader = build_detection_test_loader(cfg, "Dd_val")
+    evaluator = COCOEvaluator(test_dataset_name, ("bbox", "segm"), False, output_dir="./output/")
+    val_loader = build_detection_test_loader(cfg, test_dataset_name)
 
     inference = inference_on_dataset(predictor.model, val_loader, evaluator)
     # print(inference["bbox"])

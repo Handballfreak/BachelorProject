@@ -81,15 +81,34 @@ def on_video(video_path, predictor):
 
 
 def register_dataset():
-    train_dataset_name = "Dd_train"
-    train_images_path = "data/train"
-    train_json_annot_path = "data/train/COCO_train_annos.json"  # "data/train/COCO_train_annos.json"
+    register_grey_thermal_8bit_dataset()
+    register_rgb_dataset()
 
-    test_dataset_name = "Dd_val"
-    test_images_path = "data/val"
-    test_json_annot_path = "data/val/COCO_val_annos.json"  # "data/val/COCO_val_annos.json"
+
+def register_grey_thermal_8bit_dataset():
+    train_dataset_name = "Grey_Thermal_8bit_train"
+    train_images_path = "data/FLIR_ADAS_1_3/train/thermal_8_bit"
+    train_json_annot_path = "data/FLIR_ADAS_1_3/train/annotations_allgemein.json"
+
+    val_dataset_name = "Grey_Thermal_8bit_val"
+    val_images_path = "data/FLIR_ADAS_1_3/val/thermal_8_bit"
+    val_json_annot_path = "data/FLIR_ADAS_1_3/val/annotations_allgmein.json"
 
     register_coco_instances(name=train_dataset_name, metadata={}, json_file=train_json_annot_path,
                             image_root=train_images_path)
-    register_coco_instances(name=test_dataset_name, metadata={}, json_file=test_json_annot_path,
-                            image_root=test_images_path)
+    register_coco_instances(name=val_dataset_name, metadata={}, json_file=val_json_annot_path,
+                            image_root=val_images_path)
+
+def register_rgb_dataset():
+    train_dataset_name = "RGB_train"
+    train_images_path = "data/FLIR_ADAS_1_3/train/RGB"
+    train_json_annot_path = "data/FLIR_ADAS_1_3/train/annotations_allgemein.json"
+
+    val_dataset_name = "RGB_val"
+    val_images_path = "data/FLIR_ADAS_1_3/val/RGB"
+    val_json_annot_path = "data/FLIR_ADAS_1_3/val/annotations_allgmein.json"
+
+    register_coco_instances(name=train_dataset_name, metadata={}, json_file=train_json_annot_path,
+                            image_root=train_images_path)
+    register_coco_instances(name=val_dataset_name, metadata={}, json_file=val_json_annot_path,
+                            image_root=val_images_path)

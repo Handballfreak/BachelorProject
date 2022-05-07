@@ -24,24 +24,13 @@ checkpoint_url = "COCO-InstanceSegmentation/mask_rcnn_R_50_FPN_3x.yaml"
 
 output_dir = "./output/instance_segmentation"
 num_classes = 1  # 1
-
+train_dataset_name = "Grey_Thermal_8bit_train"
+test_dataset_name = "Grey_Thermal_8bit_val"
 device = "cuda"
-
-train_dataset_name = "Dd_train"
-train_images_path = "data/train"
-train_json_annot_path = "data/train/COCO_mul_train_annos.json"  # "data/train/COCO_train_annos.json"
-
-test_dataset_name = "Dd_val"
-test_images_path = "data/val"
-test_json_annot_path = "data/val/COCO_mul_val_annos.json"  # "data/val/COCO_val_annos.json"
 
 cfg_save_path = "IS_cfg.pickle"
 
 #####################################################
-
-
-# register_coco_instances(name=train_dataset_name, metadata={}, json_file=train_json_annot_path, image_root=train_images_path)
-# register_coco_instances(name=test_dataset_name, metadata={}, json_file=test_json_annot_path, image_root=test_images_path)
 register_dataset()
 
 
@@ -54,8 +43,8 @@ def main(cfg):
 
     os.makedirs(cfg.OUTPUT_DIR, exist_ok=True)
 
-    # trainer = DefaultTrainer(cfg)
-    trainer = AugTrainer(cfg)
+    trainer = DefaultTrainer(cfg)
+    # trainer = AugTrainer(cfg)
     # wandb.watch(trainer)
     trainer.resume_or_load(resume=False)
     # train model
@@ -92,7 +81,7 @@ def run():
         for line in metric:
             line = json.loads(line)
             wandb.log(line)
-    inference = evaluate()
+    inference = evaluate(test_dataset_name)
     res = {
         "bbox_AP": inference["bbox"]["AP"],
         "bbox_AP50": inference["bbox"]["AP50"],
@@ -122,9 +111,10 @@ def run():
     wandb.run.summary["segm_APl"] = inference["segm"]["APl"]
     # Model Artifact
     time.sleep(2)
-    artifact = wandb.Artifact("Model_Parameters", "model")
-    artifact.add_file(directory + "/model_final.pth")
-    wandb.log_artifact(artifact)
+    # Artifact bei Sweep raus da es viel Speicherplatz verbraucht
+    # artifact = wandb.Artifact("Model_Parameters", "model")
+    # artifact.add_file(directory + "/model_final.pth")
+    # wandb.log_artifact(artifact)
     wandb.finish()
 
 

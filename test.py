@@ -15,7 +15,7 @@ cfg.MODEL.ROI_HEADS.SCORE_THRESH_TEST = 0.5
 
 predictor = DefaultPredictor(cfg)
 
-image_path = "data/val/32.jpg"
+image_path = ""
 videoPath = ""
 
 on_image(image_path, predictor)
