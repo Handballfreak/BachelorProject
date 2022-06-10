@@ -27,8 +27,8 @@ num_classes = 81  # 1
 
 device = "cuda"
 cfg_save_path = "IS_cfg.pickle"
-train_dataset_name = "Grey_Thermal_8bit_train"
-test_dataset_name = "Grey_Thermal_8bit_val"
+train_dataset_name = "RGB_Thermal_8bit_train"  # "RGB_Thermal_8bit_train"       # "RGB_train"
+test_dataset_name = "RGB_Thermal_8bit_val"  # "RGB_Thermal_8bit_val"          #"RGB_val"
 register_dataset()
 
 
@@ -42,8 +42,24 @@ def main(cfg):
     os.makedirs(cfg.OUTPUT_DIR, exist_ok=True)
 
     trainer = DefaultTrainer(cfg)
-    # trainer = AugTrainer(cfg)
-    # wandb.watch(trainer)
+    trainer.resume_or_load(resume=False)
+    # train model
+    # bsp = DatasetCatalog.get("Dd_train")
+    # mapper = detectron2.data.DatasetMapper(cfg, is_train=True)
+    # bsp2 = detectron2.data.build_detection_train_loader(bsp, mapper=mapper, total_batch_size=1)
+    # for i in bsp2:
+    #     print(i)
+
+    trainer.train()
+
+
+def main_transform(cfg):
+    with open(cfg_save_path, "wb") as f:
+        pickle.dump(cfg, f, protocol=pickle.HIGHEST_PROTOCOL)
+
+    os.makedirs(cfg.OUTPUT_DIR, exist_ok=True)
+
+    trainer = AugTrainer(cfg)
     trainer.resume_or_load(resume=False)
     # train model
     # bsp = DatasetCatalog.get("Dd_train")
@@ -61,14 +77,19 @@ def run():
     learning_rate = 0.0025
     # learning_rate = 0.0025
     batch_size = 4
-    momentum = 0.9
-    epochs = 50000
+    momentum = 0.8489
+    epochs = 1500
     workers = 4
+    transform = "Off"
+    weight_decay = 0.0007535
+    gamma = 0.3661
     cfg.SOLVER.IMS_PER_BATCH = batch_size
     cfg.SOLVER.BASE_LR = learning_rate  # 0.00025
     cfg.SOLVER.MAX_ITER = epochs
     cfg.DATALOADER.NUM_WORKERS = workers
     cfg.SOLVER.MOMENTUM = momentum
+    cfg.SOLVER.WEIGHT_DECAY = weight_decay
+    cfg.SOLVER.GAMMA = gamma
     # create config informations
     wandb.config = {
         "learning_rate": learning_rate,
@@ -78,12 +99,15 @@ def run():
         "worker": workers,
         "Tranform": "Off"
     }
-    wandb.init(project="thermal_8bit", entity="handballfreak", config=wandb.config, reinit=True)
+    wandb.init(project="thermal_rgb", entity="handballfreak", config=wandb.config, reinit=True)
     run_name = wandb.run.name
     directory = "./output/instance_segmentation/" + run_name
     cfg.OUTPUT_DIR = directory
     # wandb.tensorboard.patch(root_logdir= directory)
-    main(cfg)
+    if transform == "On":
+        main_transform(cfg)
+    else:
+        main(cfg)
 
     # Training Data log
     with open(directory + "/metrics.json", "r") as metric:
@@ -118,11 +142,19 @@ def run():
     wandb.run.summary["segm_APs"] = inference["segm"]["APs"]
     wandb.run.summary["segm_APm"] = inference["segm"]["APm"]
     wandb.run.summary["segm_APl"] = inference["segm"]["APl"]
+    # wandb.run.summary["segm_AP-person"] = inference["segm"]["AP-person"]
+    # wandb.run.summary["segm_AP-bicycle"] = inference["segm"]["AP-bicycle"]
+    # wandb.run.summary["segm_AP-dog"] = inference["segm"]["AP-dog"]
+    # wandb.run.summary["segm_AP-car"] = inference["segm"]["AP-car"]
+    # wandb.run.summary["bbox_AP-person"] = inference["bbox"]["AP-person"]
+    # wandb.run.summary["bbox_AP-bicycle"] = inference["bbox"]["AP-bicycle"]
+    # wandb.run.summary["bbox_AP-dog"] = inference["bbox"]["AP-dog"]
+    # wandb.run.summary["bbox_AP-car"] = inference["bbox"]["AP-car"]
     # Model Artifact
-    #time.sleep(2)
-    #artifact = wandb.Artifact("Model_Parameters", "model")
-    #artifact.add_file(directory + "/model_final.pth")
-    #wandb.log_artifact(artifact)
+    time.sleep(2)
+    artifact = wandb.Artifact("Model_Parameters", "model")
+    artifact.add_file(directory + "/model_final.pth")
+    wandb.log_artifact(artifact)
     wandb.finish()
 
 

@@ -21,7 +21,7 @@ def evaluate(test_dataset_name):
     predictor = DefaultPredictor(cfg)
     # trainer = DefaultTrainer(cfg)
 
-    evaluator = COCOEvaluator(test_dataset_name, ("bbox", "segm"), False, output_dir="./output/")
+    evaluator = COCOEvaluator(test_dataset_name, ("bbox"), False, output_dir="./output/")
     val_loader = build_detection_test_loader(cfg, test_dataset_name)
 
     inference = inference_on_dataset(predictor.model, val_loader, evaluator)

@@ -83,30 +83,50 @@ def on_video(video_path, predictor):
 def register_dataset():
     register_grey_thermal_8bit_dataset()
     register_rgb_dataset()
-
+    register_rgb_thermal_dataset()
 
 def register_grey_thermal_8bit_dataset():
     train_dataset_name = "Grey_Thermal_8bit_train"
-    train_images_path = "data/FLIR_ADAS_1_3/train/thermal_8_bit"
+    train_images_path = "data/FLIR_ADAS_1_3_neu/images_thermal_train"
     train_json_annot_path = "data/FLIR_ADAS_1_3/train/annotations_allgemein.json"
+    train_json_annot_path = "data/FLIR_ADAS_1_3_neu/images_thermal_train/filtered_coco.json"
 
     val_dataset_name = "Grey_Thermal_8bit_val"
-    val_images_path = "data/FLIR_ADAS_1_3/val/thermal_8_bit"
+    val_images_path = "data/FLIR_ADAS_1_3_neu/images_thermal_val/"
     val_json_annot_path = "data/FLIR_ADAS_1_3/val/annotations_allgmein.json"
+    val_json_annot_path = "data/FLIR_ADAS_1_3_neu/images_thermal_val/filtered_coco.json"
 
     register_coco_instances(name=train_dataset_name, metadata={}, json_file=train_json_annot_path,
                             image_root=train_images_path)
     register_coco_instances(name=val_dataset_name, metadata={}, json_file=val_json_annot_path,
                             image_root=val_images_path)
 
+
 def register_rgb_dataset():
     train_dataset_name = "RGB_train"
-    train_images_path = "data/FLIR_ADAS_1_3/train/RGB"
+    train_images_path = "data/FLIR_ADAS_1_3_neu/images_rgb_train"
     train_json_annot_path = "data/FLIR_ADAS_1_3/train/annotations_allgemein.json"
+    train_json_annot_path = "data/FLIR_ADAS_1_3_neu/images_rgb_train/filtered_coco.json"
 
     val_dataset_name = "RGB_val"
-    val_images_path = "data/FLIR_ADAS_1_3/val/RGB"
+    val_images_path = "data/FLIR_ADAS_1_3_neu/images_rgb_val"
     val_json_annot_path = "data/FLIR_ADAS_1_3/val/annotations_allgmein.json"
+    val_json_annot_path = "data/FLIR_ADAS_1_3_neu/images_rgb_val/filtered_coco.json"
+
+    register_coco_instances(name=train_dataset_name, metadata={}, json_file=train_json_annot_path,
+                            image_root=train_images_path)
+    register_coco_instances(name=val_dataset_name, metadata={}, json_file=val_json_annot_path,
+                            image_root=val_images_path)
+
+
+def register_rgb_thermal_dataset():
+    train_dataset_name = "RGB_Thermal_8bit_train"
+    train_images_path = "data/ALL_IN_ONE_RGB_IMG_ANOT/train/"
+    train_json_annot_path = "data/ALL_IN_ONE_RGB_IMG_ANOT/train\\train_mod_coco.json"
+
+    val_dataset_name = "RGB_Thermal_8bit_val"
+    val_images_path = "data/ALL_IN_ONE_RGB_IMG_ANOT/test/"
+    val_json_annot_path = "data/ALL_IN_ONE_RGB_IMG_ANOT/test\\test_mod_coco.json"
 
     register_coco_instances(name=train_dataset_name, metadata={}, json_file=train_json_annot_path,
                             image_root=train_images_path)

@@ -24,8 +24,10 @@ checkpoint_url = "COCO-InstanceSegmentation/mask_rcnn_R_50_FPN_3x.yaml"
 
 output_dir = "./output/instance_segmentation"
 num_classes = 1  # 1
-train_dataset_name = "Grey_Thermal_8bit_train"
-test_dataset_name = "Grey_Thermal_8bit_val"
+train_dataset_name = "RGB_train"
+test_dataset_name = "RGB_val"
+#train_dataset_name = "Grey_Thermal_8bit_train"
+#test_dataset_name = "Grey_Thermal_8bit_val"
 device = "cuda"
 
 cfg_save_path = "IS_cfg.pickle"
@@ -44,8 +46,6 @@ def main(cfg):
     os.makedirs(cfg.OUTPUT_DIR, exist_ok=True)
 
     trainer = DefaultTrainer(cfg)
-    # trainer = AugTrainer(cfg)
-    # wandb.watch(trainer)
     trainer.resume_or_load(resume=False)
     # train model
     # bsp = DatasetCatalog.get("Dd_train")
@@ -56,17 +56,33 @@ def main(cfg):
 
     trainer.train()
 
+def main_transform(cfg):
+    with open(cfg_save_path, "wb") as f:
+        pickle.dump(cfg, f, protocol=pickle.HIGHEST_PROTOCOL)
+
+    os.makedirs(cfg.OUTPUT_DIR, exist_ok=True)
+
+    trainer = AugTrainer(cfg)
+    trainer.resume_or_load(resume=False)
+    # train model
+    # bsp = DatasetCatalog.get("Dd_train")
+    # mapper = detectron2.data.DatasetMapper(cfg, is_train=True)
+    # bsp2 = detectron2.data.build_detection_train_loader(bsp, mapper=mapper, total_batch_size=1)
+    # for i in bsp2:
+    #     print(i)
+
+    trainer.train()
 
 def run():
     cfg = get_train_cfg(config_file_path, checkpoint_url, train_dataset_name, test_dataset_name, num_classes, device,
                         output_dir)
     # create config informations
     hyperparameters = default_config.config
-    wandb.init(project="damage-detection2", entity="handballfreak", config=hyperparameters, reinit=True)
+    wandb.init(project="rgb", entity="handballfreak", config=hyperparameters, reinit=True)
     config = wandb.config
     cfg.SOLVER.IMS_PER_BATCH = config.batch_size
     cfg.SOLVER.BASE_LR = config.learning_rate  # 0.00025
-    cfg.SOLVER.MAX_ITER = config.epochs
+    cfg.SOLVER.MAX_ITER = 1500 #config.epochs
     cfg.DATALOADER.NUM_WORKERS = config.worker
     cfg.SOLVER.WEIGHT_DECAY = config.weight_decay
     cfg.SOLVER.GAMMA = config.gamma
@@ -75,7 +91,10 @@ def run():
     directory = "./output/instance_segmentation/" + run_name
     cfg.OUTPUT_DIR = directory
     # wandb.tensorboard.patch(root_logdir= directory)
-    main(cfg)
+    if wandb.config.Transform == "On":
+        main_transform(cfg)
+    else:
+        main(cfg)
     # Training Data log
     with open(directory + "/metrics.json", "r") as metric:
         for line in metric:
