@@ -10,9 +10,10 @@ with open(file_train, "r") as f:
 
 annotations = annot["annotations"]
 for anno in annotations:
-    segm = anno["segmentation"]
+    segm = anno.get("segmentation", None)
+    for poly in segm:
     # segm = anno["bbox"]
-    if type(segm) is not list or len(segm) == 0:
-        id = anno["id"]
-        print(id, type(segm))
+        if type(poly) is int:
+            id = anno["id"]
+            print(id, type(segm))
 print()

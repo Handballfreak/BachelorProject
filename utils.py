@@ -121,12 +121,12 @@ def register_rgb_dataset():
 
 def register_rgb_thermal_dataset():
     train_dataset_name = "RGB_Thermal_8bit_train"
-    train_images_path = "data/ALL_IN_ONE_RGB_IMG_ANOT/train/"
-    train_json_annot_path = "data/ALL_IN_ONE_RGB_IMG_ANOT/train\\train_mod_coco.json"
+    train_images_path = "data/ALL_IN_ONE_RGB_IMG_ANOT_NEU/Anotations/ALL_IN_ONE_RGB_ANOT_COCO/train"
+    train_json_annot_path = "data/ALL_IN_ONE_RGB_IMG_ANOT_NEU/Anotations/ALL_IN_ONE_RGB_ANOT_COCO/train\\train_mod_coco.json"
 
     val_dataset_name = "RGB_Thermal_8bit_val"
-    val_images_path = "data/ALL_IN_ONE_RGB_IMG_ANOT/test/"
-    val_json_annot_path = "data/ALL_IN_ONE_RGB_IMG_ANOT/test\\test_mod_coco.json"
+    val_images_path = "data/ALL_IN_ONE_RGB_IMG_ANOT_NEU/Anotations/ALL_IN_ONE_RGB_ANOT_COCO/test"
+    val_json_annot_path = "data/ALL_IN_ONE_RGB_IMG_ANOT_NEU/Anotations/ALL_IN_ONE_RGB_ANOT_COCO/test\\test_mod_coco.json"
 
     register_coco_instances(name=train_dataset_name, metadata={}, json_file=train_json_annot_path,
                             image_root=train_images_path)

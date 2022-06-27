@@ -3,11 +3,11 @@ import os
 import json
 
 # paths from annot file and source of the images
-path_files = "E:\BA_BP_Datem\Bachelor Project\BachelorProject\data\ALL_IN_ONE_RGB_IMG_ANOT"
-path_anot_train_file = "E:\BA_BP_Datem\Bachelor Project\BachelorProject\data\ALL_IN_ONE_RGB_IMG_ANOT\Anotations\All_In_One_Anot_Coco\\train_coco.json"
-path_train_dest = "E:\BA_BP_Datem\Bachelor Project\BachelorProject\data\ALL_IN_ONE_RGB_IMG_ANOT\\train"
-path_anot_test_file = "E:\BA_BP_Datem\Bachelor Project\BachelorProject\data\ALL_IN_ONE_RGB_IMG_ANOT\Anotations\All_In_One_Anot_Coco\\test_coco.json"
-path_test_dest = "E:\BA_BP_Datem\Bachelor Project\BachelorProject\data\ALL_IN_ONE_RGB_IMG_ANOT\\test"
+path_files = "E:\BA_BP_Datem\Bachelor Project\BachelorProject\data\ALL_IN_ONE_RGB_IMG_ANOT_NEU"
+path_anot_train_file = "E:\BA_BP_Datem\Bachelor Project\BachelorProject\data\ALL_IN_ONE_RGB_IMG_ANOT_NEU\Anotations\ALL_IN_ONE_RGB_ANOT_COCO\\train\\train_coco.json"
+path_train_dest = "E:\BA_BP_Datem\Bachelor Project\BachelorProject\data\ALL_IN_ONE_RGB_IMG_ANOT_NEU\Anotations\ALL_IN_ONE_RGB_ANOT_COCO\\train"
+path_anot_test_file = "E:\BA_BP_Datem\Bachelor Project\BachelorProject\data\ALL_IN_ONE_RGB_IMG_ANOT_NEU\Anotations\ALL_IN_ONE_RGB_ANOT_COCO\\test\\test_coco.json"
+path_test_dest = "E:\BA_BP_Datem\Bachelor Project\BachelorProject\data\ALL_IN_ONE_RGB_IMG_ANOT_NEU\Anotations\ALL_IN_ONE_RGB_ANOT_COCO\\test"
 
 
 def move_train_test_files(path_annot_file, path_destination):

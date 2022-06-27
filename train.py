@@ -97,7 +97,7 @@ def run():
         "batch_size": batch_size,
         "momentum": momentum,
         "worker": workers,
-        "Tranform": "Off"
+        "Tranform": transform
     }
     wandb.init(project="thermal_rgb", entity="handballfreak", config=wandb.config, reinit=True)
     run_name = wandb.run.name

@@ -24,8 +24,8 @@ checkpoint_url = "COCO-InstanceSegmentation/mask_rcnn_R_50_FPN_3x.yaml"
 
 output_dir = "./output/instance_segmentation"
 num_classes = 1  # 1
-train_dataset_name = "RGB_train"
-test_dataset_name = "RGB_val"
+train_dataset_name = "RGB_Thermal_8bit_train"
+test_dataset_name = "RGB_Thermal_8bit_val"
 #train_dataset_name = "Grey_Thermal_8bit_train"
 #test_dataset_name = "Grey_Thermal_8bit_val"
 device = "cuda"
