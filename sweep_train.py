@@ -1,5 +1,5 @@
 from detectron2.utils.logger import setup_logger
-from utils import register_dataset
+from utils import register_datasets
 import wandb
 import json
 import time
@@ -25,6 +25,8 @@ checkpoint_url = "COCO-InstanceSegmentation/mask_rcnn_R_50_FPN_3x.yaml"
 
 output_dir = "./output/instance_segmentation"
 num_classes = 1
+device = "cuda"
+cfg_save_path = "IS_cfg.pickle"
 
 # Datasets available
 # train_dataset_name = "RGB_train"
@@ -33,11 +35,9 @@ train_dataset_name = "RGB_Thermal_train"
 test_dataset_name = "RGB_Thermal_val"
 # train_dataset_name = "Grey_Thermal_train"
 # test_dataset_name = "Grey_Thermal_val"
-device = "cuda"
 
-cfg_save_path = "IS_cfg.pickle"
 ########################################################
-register_dataset()
+register_datasets()
 ########################################################
 def main(cfg):
     with open(cfg_save_path, "wb") as f:
@@ -84,7 +84,7 @@ def run():
         main_transform(cfg)
     else:
         main(cfg)
-    # Training Data log
+    # Training Data log save
     with open(directory + "/metrics.json", "r") as metric:
         for line in metric:
             line = json.loads(line)

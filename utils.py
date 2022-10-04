@@ -35,12 +35,7 @@ def get_train_cfg(config_file_path, checkpoint_url, train_dataset_name, test_dat
 
     cfg.DATALOADER.NUM_WORKERS = 8
 
-    cfg.SOLVER.IMS_PER_BATCH = 4
-    cfg.SOLVER.BASE_LR = 0.0025  # 0.00025
-    cfg.SOLVER.MAX_ITER = 3000
-    cfg.SOLVER.MOMENTUM = 0.9
-    cfg.SOLVER.GAMMA = 0.1
-    cfg.SOLVER.WEIGHT_DECAY = 0.0001
+
     cfg.SOLVER.STEPS = []
     cfg.INPUT.FORMAT = "BGR"
     cfg.MODEL.ROI_HEADS.NUM_CLASSES = num_classes
@@ -80,18 +75,18 @@ def on_video(video_path, predictor):
         (success, image) = cap.read()
 
 
-def register_dataset():
+def register_datasets():
     register_grey_thermal_8bit_dataset()
     register_rgb_dataset()
     register_rgb_thermal_dataset()
 
 def register_grey_thermal_8bit_dataset():
-    train_dataset_name = "Grey_Thermal_8bit_train"
+    train_dataset_name = "Grey_Thermal_train"
     train_images_path = "data/FLIR_ADAS_1_3_neu/images_thermal_train"
     train_json_annot_path = "data/FLIR_ADAS_1_3/train/annotations_allgemein.json"
     train_json_annot_path = "data/FLIR_ADAS_1_3_neu/images_thermal_train/filtered_coco.json"
 
-    val_dataset_name = "Grey_Thermal_8bit_val"
+    val_dataset_name = "Grey_Thermal_val"
     val_images_path = "data/FLIR_ADAS_1_3_neu/images_thermal_val/"
     val_json_annot_path = "data/FLIR_ADAS_1_3/val/annotations_allgmein.json"
     val_json_annot_path = "data/FLIR_ADAS_1_3_neu/images_thermal_val/filtered_coco.json"
@@ -120,13 +115,13 @@ def register_rgb_dataset():
 
 
 def register_rgb_thermal_dataset():
-    train_dataset_name = "RGB_Thermal_8bit_train"
+    train_dataset_name = "RGB_Thermal_train"
     train_images_path = "data/ALL_IN_ONE_RGB_IMG_ANOT_NEU/Anotations/ALL_IN_ONE_RGB_ANOT_COCO/train"
-    train_json_annot_path = "data/ALL_IN_ONE_RGB_IMG_ANOT_NEU/Anotations/ALL_IN_ONE_RGB_ANOT_COCO/train\\train_mod_coco.json"
+    train_json_annot_path = "data/ALL_IN_ONE_RGB_IMG_ANOT_NEU/Anotations/ALL_IN_ONE_RGB_ANOT_COCO/train/train_mod_coco.json"
 
-    val_dataset_name = "RGB_Thermal_8bit_val"
+    val_dataset_name = "RGB_Thermal_val"
     val_images_path = "data/ALL_IN_ONE_RGB_IMG_ANOT_NEU/Anotations/ALL_IN_ONE_RGB_ANOT_COCO/test"
-    val_json_annot_path = "data/ALL_IN_ONE_RGB_IMG_ANOT_NEU/Anotations/ALL_IN_ONE_RGB_ANOT_COCO/test\\test_mod_coco.json"
+    val_json_annot_path = "data/ALL_IN_ONE_RGB_IMG_ANOT_NEU/Anotations/ALL_IN_ONE_RGB_ANOT_COCO/test/test_mod_coco.json"
 
     register_coco_instances(name=train_dataset_name, metadata={}, json_file=train_json_annot_path,
                             image_root=train_images_path)

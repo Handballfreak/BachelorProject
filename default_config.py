@@ -5,5 +5,6 @@ config = {
     "momentum": 0.9,
     "worker": 8,
     "weight_decay": 0.0001,
-    "gamma": 0.1
+    "gamma": 0.1,
+    "transform": "Off"
 }
