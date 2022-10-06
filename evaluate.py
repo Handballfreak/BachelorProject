@@ -1,14 +1,13 @@
 from detectron2.engine import DefaultPredictor
 from detectron2.evaluation import COCOEvaluator, inference_on_dataset
 from detectron2.data import build_detection_test_loader
-from detectron2.engine import DefaultTrainer
 import os
 import pickle
-from utils import register_dataset
+from utils import register_datasets
 
 
 def evaluate(test_dataset_name):
-    # register_dataset()
+    # register_datasets()
 
     cfg_save_path = "IS_cfg.pickle"
 
@@ -19,13 +18,11 @@ def evaluate(test_dataset_name):
     cfg.MODEL.ROI_HEADS.SCORE_THRESH_TEST = 0.5
 
     predictor = DefaultPredictor(cfg)
-    # trainer = DefaultTrainer(cfg)
 
     evaluator = COCOEvaluator(test_dataset_name, ("bbox", "segm"), False, output_dir="./output/")
     val_loader = build_detection_test_loader(cfg, test_dataset_name)
 
     inference = inference_on_dataset(predictor.model, val_loader, evaluator)
-    # print(inference["bbox"])
     return inference
 
 

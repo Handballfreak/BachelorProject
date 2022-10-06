@@ -3,15 +3,14 @@ from utils import register_datasets
 import wandb
 import json
 import time
-from detectron2.data.datasets import register_coco_instances
 from detectron2.engine import DefaultTrainer
 from AugTrainer import AugTrainer
 import os
 import pickle
 from detectron2.data import DatasetCatalog
-from utils import plot_samples, get_train_cfg
+from utils import get_train_cfg
 from evaluate import evaluate
-import detectron2
+
 import default_config
 
 setup_logger()
@@ -69,7 +68,6 @@ def main_transform(cfg):
 
     trainer = AugTrainer(cfg)
     trainer.resume_or_load(resume=False)
-    # train model
 
     trainer.train()
 

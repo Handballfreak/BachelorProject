@@ -1,3 +1,5 @@
+# https://github.com/akarazniewicz/cocosplit
+
 import json
 import argparse
 import funcy

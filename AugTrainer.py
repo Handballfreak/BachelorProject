@@ -1,4 +1,4 @@
-from detectron2.data import DatasetCatalog, MetadataCatalog, build_detection_test_loader, build_detection_train_loader
+from detectron2.data import build_detection_train_loader
 from detectron2.data import detection_utils as utils
 import detectron2.data.transforms as T
 import copy
