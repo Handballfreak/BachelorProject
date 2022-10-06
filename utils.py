@@ -35,7 +35,6 @@ def get_train_cfg(config_file_path, checkpoint_url, train_dataset_name, test_dat
 
     cfg.DATALOADER.NUM_WORKERS = 8
 
-
     cfg.SOLVER.STEPS = []
     cfg.INPUT.FORMAT = "BGR"
     cfg.MODEL.ROI_HEADS.NUM_CLASSES = num_classes
@@ -79,6 +78,7 @@ def register_datasets():
     register_grey_thermal_8bit_dataset()
     register_rgb_dataset()
     register_rgb_thermal_dataset()
+
 
 def register_grey_thermal_8bit_dataset():
     train_dataset_name = "Grey_Thermal_train"

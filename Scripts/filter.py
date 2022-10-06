@@ -1,5 +1,7 @@
 import json
 from pathlib import Path
+
+
 # https://github.com/immersive-limit/coco-manager/blob/master/filter.py
 
 class CocoFilter():
@@ -101,8 +103,8 @@ class CocoFilter():
 
     def main(self, args):
         # Open json
-        self.input_json_path = Path("E:\BA_BP_Datem\Bachelor Project\BachelorProject\data\ALL_IN_ONE_RGB_IMG_ANOT\Anotations\All_In_One_Anot_Coco\coco.json") #Path(args.input_json)
-        self.output_json_path = Path("E:\BA_BP_Datem\Bachelor Project\BachelorProject\Scripts/filtered_coco.json") #Path(args.output_json)
+        self.input_json_path = Path(args.input_json)
+        self.output_json_path = Path(args.output_json)
         self.filter_categories = args.categories
 
         # Verify input path exists
@@ -161,10 +163,10 @@ if __name__ == "__main__":
                                                  "Filters a COCO Instances JSON file to only include specified categories. "
                                                  "This includes images, and annotations. Does not modify 'info' or 'licenses'.")
 
-    # parser.add_argument("-i", "--input_json", dest="input_json",
-    #                    help="path to a json file in coco format")
-    # parser.add_argument("-o", "--output_json", dest="output_json",
-    #                     help="path to save the output json")
+    parser.add_argument("-i", "--input_json", dest="input_json",
+                        help="path to a json file in coco format")
+    parser.add_argument("-o", "--output_json", dest="output_json",
+                        help="path to save the output json")
     parser.add_argument("-c", "--categories", nargs='+', dest="categories",
                         help="List of category names separated by spaces, e.g. -c person dog bicycle")
 

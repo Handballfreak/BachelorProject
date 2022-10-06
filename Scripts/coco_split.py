@@ -44,8 +44,8 @@ args = parser.parse_args()
 def main(args):
     with open(args.annotations, 'rt', encoding='UTF-8') as annotations:
         coco = json.load(annotations)
-        info = None #coco['info']
-        licenses = None #coco['licenses']
+        info = None  # coco['info']
+        licenses = None  # coco['licenses']
         images = coco['images']
         annotations = coco['annotations']
         categories = coco['categories']

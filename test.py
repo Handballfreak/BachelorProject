@@ -20,4 +20,4 @@ videoPath = ""
 # plot_samples(dataset_name="", n = 4)
 on_image(image_path, predictor)
 # Zeile drunter Kommentar Zeichen entfernen für Video Test
-#on_video(videoPath, predictor)
+# on_video(videoPath, predictor)
