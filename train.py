@@ -29,13 +29,13 @@ num_classes = 1
 device = "cuda"
 cfg_save_path = "IS_cfg.pickle"
 
-# Datasets available
+# available Datasets
 # train_dataset_name = "RGB_train"
 # test_dataset_name = "RGB_val"
-train_dataset_name = "RGB_Thermal_train"
-test_dataset_name = "RGB_Thermal_val"
-# train_dataset_name = "Grey_Thermal_train"
-# test_dataset_name = "Grey_Thermal_val"
+# train_dataset_name = "RGB_Thermal_train"
+# test_dataset_name = "RGB_Thermal_val"
+train_dataset_name = "Grey_Thermal_train"
+test_dataset_name = "Grey_Thermal_val"
 
 
 ########################################################
@@ -76,14 +76,14 @@ def run():
     cfg = get_train_cfg(config_file_path, checkpoint_url, train_dataset_name, test_dataset_name, num_classes, device,
                         output_dir)
     config = default_config.config
-    config["learning_rate"] = 0.0025
+    config["learning_rate"] = 0.004666
     config["batch_size"] = 4
-    config["momentum"] = 0.8489
+    config["momentum"] = 0.8914
     config["epochs"] = 1500
-    config["workers"] = 4
-    config["transform"] = "On"
-    config["weight_decay"] = 0.0007535
-    config["gamma"] = 0.3661
+    config["workers"] = 8
+    config["transform"] = "Off"
+    config["weight_decay"] = 0.0001
+    config["gamma"] = 0.1
     cfg.SOLVER.IMS_PER_BATCH = config["batch_size"]
     cfg.SOLVER.BASE_LR = config["learning_rate"]
     cfg.SOLVER.MAX_ITER = config["epochs"]
@@ -93,9 +93,9 @@ def run():
     cfg.SOLVER.GAMMA = config["gamma"]
 
     # create config informations
-    wandb.init(project="", entity="handballfreak", config=config, reinit=True)
+    wandb.init(project="Testproject", entity="handballfreak", config=config, reinit=True)
     run_name = wandb.run.name
-    directory = "./output/instance_segmentation/" + run_name
+    directory = output_dir + "/" + run_name
     cfg.OUTPUT_DIR = directory
     if config["transform"] == "On":
         main_transform(cfg)

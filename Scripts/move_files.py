@@ -3,11 +3,16 @@ import os
 import json
 
 # paths from annot file and source of the images
-path_files = "E:\BA_BP_Datem\Bachelor Project\BachelorProject\data\ALL_IN_ONE_RGB_IMG_ANOT_NEU"
-path_anot_train_file = "E:\BA_BP_Datem\Bachelor Project\BachelorProject\data\ALL_IN_ONE_RGB_IMG_ANOT_NEU\Anotations\ALL_IN_ONE_RGB_ANOT_COCO\\train\\train_coco.json"
-path_train_dest = "E:\BA_BP_Datem\Bachelor Project\BachelorProject\data\ALL_IN_ONE_RGB_IMG_ANOT_NEU\Anotations\ALL_IN_ONE_RGB_ANOT_COCO\\train"
-path_anot_test_file = "E:\BA_BP_Datem\Bachelor Project\BachelorProject\data\ALL_IN_ONE_RGB_IMG_ANOT_NEU\Anotations\ALL_IN_ONE_RGB_ANOT_COCO\\test\\test_coco.json"
-path_test_dest = "E:\BA_BP_Datem\Bachelor Project\BachelorProject\data\ALL_IN_ONE_RGB_IMG_ANOT_NEU\Anotations\ALL_IN_ONE_RGB_ANOT_COCO\\test"
+# path file location
+path_files = "data/ALL_IN_ONE_RGB_IMG_ANOT_NEU"
+# path train annotation file locatiom
+path_anot_train_file = "data/ALL_IN_ONE_RGB_IMG_ANOT_NEU/Anotations/ALL_IN_ONE_RGB_ANOT_COCO/train/train_coco.json"
+# path train files destination
+path_train_dest = "data/ALL_IN_ONE_RGB_IMG_ANOT_NEU/Anotations/ALL_IN_ONE_RGB_ANOT_COCO/train"
+# path test annotation file location
+path_anot_test_file = "data/ALL_IN_ONE_RGB_IMG_ANOT_NEU/Anotations/ALL_IN_ONE_RGB_ANOT_COCO/test/test_coco.json"
+# path test files destination
+path_test_dest = "data/ALL_IN_ONE_RGB_IMG_ANOT_NEU/Anotations/ALL_IN_ONE_RGB_ANOT_COCO/test"
 
 
 def move_train_test_files(path_annot_file, path_destination):
@@ -20,7 +25,7 @@ def move_train_test_files(path_annot_file, path_destination):
         file_name = image["file_name"]
         file_path = os.path.join(path_files, file_name)
         file_dest_path = os.path.join(path_destination, file_name)
-        # Bild verschieben
+        # move image to new location
         try:
             shutil.move(file_path, file_dest_path)
         except FileNotFoundError:
@@ -31,3 +36,4 @@ def move_train_test_files(path_annot_file, path_destination):
 
 move_train_test_files(path_anot_train_file, path_train_dest)
 move_train_test_files(path_anot_test_file, path_test_dest)
+

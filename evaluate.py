@@ -9,7 +9,7 @@ from utils import register_datasets
 def evaluate(test_dataset_name):
     # register_datasets()
 
-    cfg_save_path = "IS_cfg.pickle"
+    cfg_save_path = "IS_FLIR_cfg.pickle"
 
     with open(cfg_save_path, "rb") as f:
         cfg = pickle.load(f)

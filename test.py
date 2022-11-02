@@ -14,10 +14,13 @@ cfg.MODEL.ROI_HEADS.SCORE_THRESH_TEST = 0.5
 
 predictor = DefaultPredictor(cfg)
 
-image_path = "E:\BA_BP_Datem\Bachelor Project\BachelorProject\data\ALL_IN_ONE_RGB_IMG_ANOT\\test\\002.jpg"
+# Inserting the path for image and video to test the model
+image_path = ""
 videoPath = ""
 
+# remove # in Line 23 for plot of n samples from choosen dataset
+# (RGB_train, RGB_val, RGB_Thermal_train, RGB_Thermal_val, Grey_Thermal_train, Grey_Thermal_val)
 # plot_samples(dataset_name="", n = 4)
 on_image(image_path, predictor)
-# Zeile drunter Kommentar Zeichen entfernen für Video Test
+# Line below remove # for video test
 # on_video(videoPath, predictor)

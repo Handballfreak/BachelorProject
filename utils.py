@@ -83,12 +83,10 @@ def register_datasets():
 def register_grey_thermal_8bit_dataset():
     train_dataset_name = "Grey_Thermal_train"
     train_images_path = "data/FLIR_ADAS_1_3_neu/images_thermal_train"
-    train_json_annot_path = "data/FLIR_ADAS_1_3/train/annotations_allgemein.json"
     train_json_annot_path = "data/FLIR_ADAS_1_3_neu/images_thermal_train/filtered_coco.json"
 
     val_dataset_name = "Grey_Thermal_val"
     val_images_path = "data/FLIR_ADAS_1_3_neu/images_thermal_val/"
-    val_json_annot_path = "data/FLIR_ADAS_1_3/val/annotations_allgmein.json"
     val_json_annot_path = "data/FLIR_ADAS_1_3_neu/images_thermal_val/filtered_coco.json"
 
     register_coco_instances(name=train_dataset_name, metadata={}, json_file=train_json_annot_path,
@@ -100,12 +98,10 @@ def register_grey_thermal_8bit_dataset():
 def register_rgb_dataset():
     train_dataset_name = "RGB_train"
     train_images_path = "data/FLIR_ADAS_1_3_neu/images_rgb_train"
-    train_json_annot_path = "data/FLIR_ADAS_1_3/train/annotations_allgemein.json"
     train_json_annot_path = "data/FLIR_ADAS_1_3_neu/images_rgb_train/filtered_coco.json"
 
     val_dataset_name = "RGB_val"
     val_images_path = "data/FLIR_ADAS_1_3_neu/images_rgb_val"
-    val_json_annot_path = "data/FLIR_ADAS_1_3/val/annotations_allgmein.json"
     val_json_annot_path = "data/FLIR_ADAS_1_3_neu/images_rgb_val/filtered_coco.json"
 
     register_coco_instances(name=train_dataset_name, metadata={}, json_file=train_json_annot_path,
