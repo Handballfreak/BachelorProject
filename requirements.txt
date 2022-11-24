@@ -9,7 +9,7 @@ numpy
 
 
 # Requirements Scripts
-sklearn
+scikit-learn
 funcy
 argparse
 scikit-multilearn

@@ -8,5 +8,7 @@ df = pd.read_csv(csv_path)
 std = np.std(df)
 varianz = np.var(df)
 
-
-print()
+print("Standardabweichung:")
+print(std)
+print("\nVarianz:")
+print(varianz)
